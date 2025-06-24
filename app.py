@@ -12,9 +12,20 @@ import gspread
 from google.oauth2.service_account import Credentials
 import json
 
-# Write the service account file as soon as possible
-with open("service_account.json", "w") as f:
-    json.dump(dict(st.secrets["gcp_service_account"]), f)
+# Debug: Print the service account details (remove this after testing)
+st.write("Service Account Keys:", st.secrets["gcp_service_account"].keys())
+
+# Write the service account file
+service_account_info = dict(st.secrets["gcp_service_account"])
+# Debug: Print the dict keys (remove this after testing)
+st.write("Dict Keys:", service_account_info.keys())
+
+try:
+    with open("service_account.json", "w") as f:
+        json.dump(service_account_info, f)
+    st.write("Service account file created successfully")
+except Exception as e:
+    st.error(f"Error creating service account file: {e}")
 
 def extract_text_with_ocr(uploaded_file):
     # Convert PDF pages to images
