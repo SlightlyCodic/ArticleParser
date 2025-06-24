@@ -58,6 +58,10 @@ st.caption("Extract Challenges & Interventions using Hugging Face LLM or OpenAI 
 # --- Upload PDF ---
 uploaded_file = st.file_uploader("Upload a PDF file", type=["pdf"])
 
+# --- Article Name and Link Inputs ---
+article_name = st.text_input("Article Name")
+article_link = st.text_input("Article Link (URL)")
+
 # --- Model Selection ---
 model_choice = st.radio(
     "Choose LLM backend:",
@@ -65,8 +69,6 @@ model_choice = st.radio(
 )
 
 if uploaded_file is not None:
-    article_name = st.text_input("Article Name", value=uploaded_file.name)
-
     if st.button("Extract Information"):
         # Try normal extraction first
         reader = PyPDF2.PdfReader(uploaded_file)
@@ -171,7 +173,7 @@ Article:
 
         # Append to Google Sheets
         try:
-            append_to_gsheet(article_name, challenges_text, interventions_text, "N/A (uploaded file)")
+            append_to_gsheet(article_name, challenges_text, interventions_text, article_link)
             st.success("Data appended to Google Sheet!")
         except Exception as e:
             st.warning(f"Could not append to Google Sheet: {e}")
