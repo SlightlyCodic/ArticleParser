@@ -87,13 +87,13 @@ if uploaded_file is not None:
             st.stop()
 
         # --- Step 2: Create prompt for LLM ---
-        hf_prompt = f"""Read the following academic article and extract the main challenges and interventions as bullet points.
+        hf_prompt = f"""Read the following academic article and extract the main challenges and interventions as numbered lists.
 
 Challenges:
-- (list each challenge as a bullet point)
+1. (list each challenge as a numbered item)
 
 Interventions:
-- (list each intervention as a bullet point)
+1. (list each intervention as a numbered item)
 
 Article:
 {text[:1000]}
@@ -101,12 +101,17 @@ Article:
 
         gpt_prompt_template = """Read the following academic article and extract:
 
-1. List the main challenges discussed in the article as bullet points.
-2. List the interventions or solutions proposed as bullet points.
+1. List the main challenges discussed in the article as numbered items.
+2. List the interventions or solutions proposed as numbered items.
 
 Return the result in this format:
 
-Challenges:\n- ...\n- ...\nInterventions:\n- ...\n- ...
+Challenges:
+1. ...
+2. ...
+Interventions:
+1. ...
+2. ...
 
 Article:
 {text}
@@ -161,8 +166,8 @@ Article:
 
         # --- Step 4: Parse Challenges & Interventions ---
         import re
-        challenges = re.search(r"Challenges:\s*((?:- .*(?:\n|$))+)", result_text)
-        interventions = re.search(r"Intervention[s]?:\s*((?:- .*(?:\n|$))+)", result_text)
+        challenges = re.search(r"Challenges:\s*((?:\d+\. .*(?:\n|$))+)", result_text)
+        interventions = re.search(r"Intervention[s]?:\s*((?:\d+\. .*(?:\n|$))+)", result_text)
 
         challenges_text = challenges.group(1).strip() if challenges else "Not found"
         interventions_text = interventions.group(1).strip() if interventions else "Not found"
