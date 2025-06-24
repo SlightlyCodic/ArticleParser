@@ -6,7 +6,7 @@ PyPDF2
 pytesseract
 pdf2image
 Pillow
-openai
+openai==0.28
 gspread
 google-auth
 tiktoken
