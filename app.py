@@ -169,4 +169,4 @@ Article:
             st.warning(f"Could not append to Google Sheet: {e}")
 
 with open("service_account.json", "w") as f:
-    json.dump(st.secrets["gcp_service_account"], f)
+    json.dump(dict(st.secrets["gcp_service_account"]), f)
