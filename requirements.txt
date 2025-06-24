@@ -1,0 +1,12 @@
+streamlit
+requests
+PyMuPDF
+pandas
+PyPDF2
+pytesseract
+pdf2image
+Pillow
+openai
+gspread
+google-auth
+tiktoken
