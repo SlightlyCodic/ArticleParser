@@ -12,6 +12,10 @@ import gspread
 from google.oauth2.service_account import Credentials
 import json
 
+# Write the service account file as soon as possible
+with open("service_account.json", "w") as f:
+    json.dump(dict(st.secrets["gcp_service_account"]), f)
+
 def extract_text_with_ocr(uploaded_file):
     # Convert PDF pages to images
     images = convert_from_bytes(uploaded_file.read())
@@ -167,6 +171,3 @@ Article:
             st.success("Data appended to Google Sheet!")
         except Exception as e:
             st.warning(f"Could not append to Google Sheet: {e}")
-
-with open("service_account.json", "w") as f:
-    json.dump(dict(st.secrets["gcp_service_account"]), f)
